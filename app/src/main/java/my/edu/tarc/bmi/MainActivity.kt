@@ -9,16 +9,19 @@ import android.widget.TextView
 import kotlin.math.pow
 
 // variableName : Type
-// val = value, var = variable
+// val = value (immutable), var = variable
 // E.g. val pi: Double = 3.14159
 // E.g. var num: Float
 // fun = function
+// lateinit = late initialize, assign value later
 // override onCreate in AppCompatActivity
-
-
 
 class MainActivity : AppCompatActivity() {
     // Global variable
+    private lateinit var editTextWeight: EditText
+    private lateinit var editTextHeight: EditText
+    private lateinit var textViewBMI : TextView
+    private lateinit var imageViewBMI: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,31 +38,36 @@ class MainActivity : AppCompatActivity() {
 
         buttonCalculate.setOnClickListener {
             // To retrieve value from a view
-            val weight: Float = editTextWeight.text.toString().toFloat()
+            val weight: Float = editTextWeight.text.toString().toFloat() // toDouble()
             val height: Float = editTextHeight.text.toString().toFloat()
 
             //BMI = kg/m pow 2
             val bmi = weight/((height/100).pow(2))
 
-            //TODO: Determine the status of BMI and present the result to the user
+
+            //if else statement to display image of different BMI results
             if (bmi < 18.5) {
+                textViewBMI.text = String.format("%1.2f, %s", bmi, getString(R.string.underweight))
                 imageViewBMI.setImageResource(R.drawable.under)
             }
-            else if (bmi >= 18.5 && bmi < 24.9) {
+            else if (bmi >= 18.5 && bmi < 25) {
+                textViewBMI.text = String.format("%1.2f, %s", bmi, getString(R.string.normal))
                 imageViewBMI.setImageResource(R.drawable.normal)
             }
             else if (bmi >= 25 && bmi < 29.9) {
+                textViewBMI.text = String.format("%1.2f, %s", bmi, getString(R.string.overweight))
                 imageViewBMI.setImageResource(R.drawable.over)
             }
-            textViewBMI.text = bmi.toString()
         } // end of Calculate onClickListener
 
         buttonReset.setOnClickListener {
             textViewBMI.text = "BMI"
             editTextWeight.text = null
-            editTextHeight.text = null
+            editTextHeight.text = null // or text.clear()
             imageViewBMI.setImageResource(R.drawable.empty)
         } // end of Reset onClickListener
+
+
 
     } // end of function
 } // end of class
