@@ -1,5 +1,6 @@
 package my.edu.tarc.bmi
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -35,6 +36,12 @@ class MainActivity : AppCompatActivity() {
         val buttonReset: Button = findViewById(R.id.buttonReset)
         val textViewBMI: TextView = findViewById(R.id.textViewBMI)
         val imageViewBMI: ImageView = findViewById(R.id.imageViewBMI)
+        val imageViewMoreInfo: ImageView = findViewById(R.id.imageViewMoreInfo)
+
+        imageViewMoreInfo.setOnClickListener {
+            val intent = Intent(this, InfoActivity::class.java)
+            startActivity(intent)
+        }
 
         buttonCalculate.setOnClickListener {
             // To retrieve value from a view
